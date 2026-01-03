@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jardín de Nuestro Amor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET Y CONFIGURACIÓN BASE PARA RESPONSIVE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        html {
+            font-size: 16px;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom, #0a0a2a, #1a0033);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: max(10px, 3vmin);
+            line-height: 1.5;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* CONTENEDOR PRINCIPAL - TOTALMENTE RESPONSIVE */
+        .container {
+            width: 100%;
+            max-width: min(1200px, 95vw);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* ENCABEZADO RESPONSIVE */
+        .header {
+            text-align: center;
+            margin-bottom: clamp(15px, 4vmin, 30px);
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            margin-bottom: clamp(5px, 2vmin, 10px);
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 118, 140, 0.3);
+            font-weight: 700;
+            line-height: 1.2;
+            padding: 0 clamp(5px, 2vw, 15px);
+        }
+        
+        .subtitle {
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            color: #a3d9ff;
+            font-style: italic;
+            margin-bottom: clamp(10px, 2vmin, 20px);
+            padding: 0 clamp(5px, 2vw, 15px);
+        }
+        
+        /* INSTRUCCIONES RESPONSIVE */
+        .instructions {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: clamp(10px, 2vmin, 15px);
+            border-radius: clamp(10px, 2vmin, 15px);
+            margin-bottom: clamp(15px, 3vmin, 20px);
+            width: 100%;
+            max-width: min(600px, 90vw);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+        }
+        
+        /* PROGRESO RESPONSIVE */
+        .progress-container {
+            width: 100%;
+            max-width: min(600px, 90vw);
+            background-color: rgba(255, 255, 255, 0.1);
+            height: clamp(12px, 3vmin, 20px);
+            border-radius: clamp(6px, 1.5vmin, 10px);
+            margin-bottom: clamp(15px, 3vmin, 30px);
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            border-radius: inherit;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-bottom: clamp(8px, 2vmin, 10px);
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            color: #a3d9ff;
+            width: 100%;
+            max-width: min(600px, 90vw);
+        }
+        
+        /* JARDÍN DE CORAZONES - TOTALMENTE RESPONSIVE */
+        .garden-container {
+            width: 100%;
+            max-width: min(900px, 95vw);
+            height: clamp(300px, 50vmin, 500px);
+            position: relative;
+            margin-bottom: clamp(20px, 5vmin, 40px);
+            border-radius: clamp(15px, 3vmin, 20px);
+            overflow: hidden;
+            box-shadow: 0 clamp(5px, 1.5vmin, 10px) clamp(15px, 3vmin, 30px) rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to bottom, rgba(10, 30, 60, 0.8), rgba(25, 0, 51, 0.9));
+            touch-action: none;
+        }
+        
+        .garden-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1000');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .hearts-garden {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        /* CORAZONES - ADAPTABLES A CUALQUIER TAMAÑO */
+        .heart-plant {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 3;
+            touch-action: manipulation;
+            transform-origin: center;
+        }
+        
+        .heart-plant:hover, .heart-plant:active {
+            transform: scale(1.1);
+        }
+        
+        .heart-plant i {
+            font-size: clamp(25px, 6vmin, 40px);
+            color: #ff7eb3;
+            filter: drop-shadow(0 0 clamp(4px, 1.5vmin, 8px) rgba(255, 126, 179, 0.7));
+        }
+        
+        .heart-plant.watered {
+            animation: grow 1.5s ease forwards;
+        }
+        
+        @keyframes grow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        /* REGADERA - OPTIMIZADA PARA TACTIL */
+        .water-can {
+            position: absolute;
+            bottom: clamp(15px, 3vmin, 20px);
+            right: clamp(15px, 3vmin, 20px);
+            width: clamp(50px, 10vmin, 70px);
+            height: clamp(50px, 10vmin, 70px);
+            background: linear-gradient(to bottom, #4dabf7, #228be6);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 clamp(3px, 1vmin, 5px) clamp(10px, 2vmin, 15px) rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, background 0.3s;
+            touch-action: none;
+            user-select: none;
+        }
+        
+        .water-can:hover, .water-can:active {
+            transform: scale(1.1);
+            background: linear-gradient(to bottom, #74c0fc, #339af0);
+        }
+        
+        .water-can i {
+            font-size: clamp(20px, 5vmin, 30px);
+            color: white;
+        }
+        
+        .water-can.active {
+            animation: waterShake 0.5s ease infinite;
+        }
+        
+        @keyframes waterShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        /* GOTAS DE AGUA */
+        .water-drop {
+            position: absolute;
+            width: clamp(6px, 1.5vmin, 10px);
+            height: clamp(6px, 1.5vmin, 10px);
+            background-color: #4dabf7;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0.8;
+            animation: dropFall 1s linear forwards;
+        }
+        
+        @keyframes dropFall {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(clamp(30px, 8vmin, 50px)) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        /* CARTA SECRETA - PERFECTAMENTE ADAPTABLE */
+        .message-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s, visibility 0.8s;
+            backdrop-filter: blur(clamp(5px, 2vmin, 10px));
+            padding: max(10px, 3vmin);
+            overflow-y: auto;
+        }
+        
+        .message-container.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .secret-message {
+            background: linear-gradient(to bottom right, #ff7eb3, #ff758c, #ff7eb3);
+            padding: clamp(20px, 5vmin, 40px);
+            border-radius: clamp(15px, 3vmin, 20px);
+            width: min(700px, 95vw);
+            max-height: 90vh;
+            text-align: center;
+            box-shadow: 0 clamp(10px, 3vmin, 15px) clamp(20px, 5vmin, 40px) rgba(255, 118, 140, 0.3);
+            transform: scale(0.8);
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .message-container.show .secret-message {
+            transform: scale(1);
+        }
+        
+        /* CONTENIDO DE LA CARTA - LEGIBLE EN CUALQUIER DISPOSITIVO */
+        .message-content {
+            background-color: rgba(255, 255, 255, 0.98);
+            padding: clamp(20px, 4vmin, 30px);
+            border-radius: clamp(10px, 2vmin, 15px);
+            color: #333;
+            line-height: 1.6;
+            font-size: clamp(1rem, 3.2vw, 1.2rem);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .message-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: #d63384;
+            margin-bottom: clamp(10px, 3vmin, 20px);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .message-text {
+            margin-bottom: clamp(15px, 3vmin, 25px);
+            text-align: left;
+        }
+        
+        .message-text p {
+            margin-bottom: clamp(10px, 2vmin, 15px);
+        }
+        
+        .message-signature {
+            text-align: right;
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            color: #d63384;
+            font-weight: 600;
+            margin-top: clamp(15px, 4vmin, 30px);
+            font-style: italic;
+        }
+        
+        /* BOTÓN DE CERRAR - GRANDE PARA TACTIL */
+        .close-message {
+            position: absolute;
+            top: clamp(10px, 2vmin, 15px);
+            right: clamp(10px, 2vmin, 15px);
+            background: none;
+            border: none;
+            color: white;
+            font-size: clamp(20px, 4vmin, 24px);
+            cursor: pointer;
+            width: clamp(35px, 7vmin, 40px);
+            height: clamp(35px, 7vmin, 40px);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            touch-action: manipulation;
+            z-index: 1001;
+        }
+        
+        .close-message:hover, .close-message:active {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* ELEMENTOS DECORATIVOS */
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            color: #ff7eb3;
+            font-size: clamp(16px, 4vmin, 24px);
+            opacity: 0;
+            animation: floatUp 8s linear infinite;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        /* CONTROL DE MÚSICA */
+        .music-control {
+            position: fixed;
+            top: clamp(10px, 3vmin, 20px);
+            right: clamp(10px, 3vmin, 20px);
+            width: clamp(45px, 8vmin, 50px);
+            height: clamp(45px, 8vmin, 50px);
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            font-size: clamp(1.2rem, 3vmin, 1.5rem);
+            color: #ff7eb3;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+            touch-action: manipulation;
+        }
+        
+        .music-control:hover, .music-control:active {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+        
+        /* EFECTO DE CONFETI */
+        .confetti {
+            position: fixed;
+            width: clamp(6px, 2vmin, 10px);
+            height: clamp(12px, 3vmin, 20px);
+            background-color: #ff7eb3;
+            top: -20px;
+            z-index: 1000;
+            opacity: 0;
+        }
+        
+        /* ORIENTACIÓN HORIZONTAL EN MÓVILES */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                align-items: flex-start;
+                gap: clamp(10px, 3vmin, 20px);
+            }
+            
+            .header {
+                width: 100%;
+                margin-bottom: clamp(5px, 2vmin, 10px);
+            }
+            
+            .progress-container, .progress-text, .instructions {
+                width: 45%;
+                max-width: none;
+                margin-bottom: clamp(10px, 2vmin, 15px);
+            }
+            
+            .garden-container {
+                width: 45%;
+                height: clamp(250px, 40vmin, 300px);
+                margin-bottom: clamp(10px, 2vmin, 15px);
+            }
+            
+            .message-content {
+                max-height: 60vh;
+                font-size: clamp(0.9rem, 2.5vw, 1rem);
+            }
+        }
+        
+        /* DISPOSITIVOS MUY PEQUEÑOS */
+        @media (max-width: 350px) {
+            .garden-container {
+                height: clamp(250px, 45vmin, 280px);
+            }
+            
+            .heart-plant i {
+                font-size: clamp(20px, 5vmin, 25px);
+            }
+            
+            .water-can {
+                width: clamp(40px, 8vmin, 45px);
+                height: clamp(40px, 8vmin, 45px);
+            }
+            
+            .secret-message {
+                padding: clamp(15px, 4vmin, 20px);
+            }
+            
+            .message-content {
+                padding: clamp(15px, 3vmin, 20px);
+            }
+        }
+        
+        /* TABLETS Y DISPOSITIVOS MÁS GRANDES */
+        @media (min-width: 768px) and (min-height: 600px) {
+            .garden-container {
+                height: clamp(400px, 45vmin, 500px);
+            }
+            
+            .heart-plant i {
+                font-size: clamp(30px, 5vmin, 40px);
+            }
+        }
+        
+        /* PREVENIR ZOOM EN INPUTS EN iOS */
+        @media screen and (max-width: 767px) {
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+        
+        /* MEJORAR VISIBILIDAD EN MODO OSCURO */
+        @media (prefers-color-scheme: dark) {
+            .message-content {
+                background-color: rgba(255, 255, 255, 0.95);
+            }
+        }
+        
+        /* ANIMACIÓN DE ENTRADA */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
+    </div>
+    
+    <div class="container">
+        <div class="header fade-in">
+            <h1>Jardín de Nuestro Amor</h1>
+            <p class="subtitle">Riega los corazones para hacer crecer nuestro jardín especial</p>
+        </div>
+        
+        <div class="progress-text">Corazones regados: <span id="wateredCount">0</span> / <span id="totalHearts">10</span></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="instructions">
+            <p>Toma la regadera y toca cada corazón para regarlo. Cuando todos hayan crecido, descubrirás un mensaje especial.</p>
+        </div>
+        
+        <div class="garden-container">
+            <div class="garden-bg"></div>
+            <div class="hearts-garden" id="heartsGarden"></div>
+            <div class="water-can" id="waterCan">
+                <i class="fas fa-tint"></i>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p><i class="fas fa-heart" style="color:#ff7eb3; margin-right:clamp(4px, 1vw, 8px);"></i> Cada corazón necesita tu cuidado para florecer</p>
+        </div>
+    </div>
+    
+    <div class="message-container" id="messageContainer">
+        <div class="secret-message">
+            <button class="close-message" id="closeMessage" aria-label="Cerrar mensaje">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="message-content">
+                <h2 class="message-title">Para Ti, Mi Amor</h2>
+                <div class="message-text">
+                    <p>Querida <span id="girlfriendName">Amor Mío</span>,</p>
+                    <p>Así como has regado cada corazón en este jardín, así has regado el mío con tu amor, paciencia y cariño. Cada día a tu lado es una nueva flor que florece en el jardín de mi vida.</p>
+                    <p>Recuerdo la primera vez que te vi, como una semilla de algo hermoso que aún no podía imaginar. Con el tiempo, has crecido en mi corazón hasta convertirte en el árbol más fuerte y hermoso, cuyas raíces se han entrelazado con las mías de forma inseparable.</p>
+                    <p>Me encanta cómo riegas mi vida con risas, cómo abonas mis días con complicidad, y cómo podas mis preocupaciones con tu apoyo incondicional. Eres el jardinero perfecto para el jardín de mi alma.</p>
+                    <p>Hoy quiero prometerte que seguiré regando nuestro amor cada día, que cuidaré de esta conexión especial que hemos cultivado juntos, y que siempre buscaré la luz del sol incluso en los días nublados, porque contigo todo es más brillante.</p>
+                    <p>Este jardín virtual es solo un pequeño reflejo de todo lo que quiero construir contigo. Un espacio donde nuestro amor pueda crecer, florecer y dar frutos eternos.</p>
+                    <p>Te amo más de lo que estas simples palabras pueden expresar.</p>
+                </div>
+                <div class="message-signature">
+                    <p>Con todo mi corazón,<br><span id="yourName">Tu pareja</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="backgroundMusic" loop preload="metadata">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-cleaning-through-romance-389.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="waterSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-water-splash-1333.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="growthSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-300.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="successSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Elementos DOM
+        const heartsGarden = document.getElementById('heartsGarden');
+        const waterCan = document.getElementById('waterCan');
+        const messageContainer = document.getElementById('messageContainer');
+        const closeMessage = document.getElementById('closeMessage');
+        const wateredCountElement = document.getElementById('wateredCount');
+        const totalHeartsElement = document.getElementById('totalHearts');
+        const progressBar = document.getElementById('progressBar');
+        const musicControl = document.getElementById('musicControl');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const waterSound = document.getElementById('waterSound');
+        const growthSound = document.getElementById('growthSound');
+        const successSound = document.getElementById('successSound');
+        const starsContainer = document.getElementById('stars');
+        const floatingHeartsContainer = document.getElementById('floatingHearts');
+        const girlfriendNameElement = document.getElementById('girlfriendName');
+        const yourNameElement = document.getElementById('yourName');
+        
+        // Personalizar nombres
+        girlfriendNameElement.textContent = "Amor Mío";
+        yourNameElement.textContent = "Tu Pareja";
+        
+        // Variables del juego
+        let totalHearts = 10;
+        let wateredHearts = 0;
+        let isWatering = false;
+        let isMusicPlaying = false;
+        let hearts = [];
+        
+        // Configurar estrellas en el fondo
+        function createStars() {
+            starsContainer.innerHTML = '';
+            const starCount = window.innerWidth < 768 ? 80 : 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Posición aleatoria
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                
+                // Animación con retraso aleatorio
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            floatingHeartsContainer.innerHTML = '';
+            const heartIcons = ['❤', '💖', '💗', '💓', '💞', '💕'];
+            const heartCount = window.innerWidth < 768 ? 12 : 20;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                
+                // Posición aleatoria
+                heart.style.left = `${Math.random() * 100}vw`;
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 15 + 10;
+                heart.style.fontSize = `${size}px`;
+                
+                // Animación con duración y retraso aleatorios
+                const duration = Math.random() * 8 + 6;
+                const delay = Math.random() * 3;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.animationDelay = `${delay}s`;
+                
+                floatingHeartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Crear corazones en el jardín
+        function createHeartPlants() {
+            heartsGarden.innerHTML = '';
+            hearts = [];
+            totalHeartsElement.textContent = totalHearts;
+            
+            // Determinar cantidad de corazones según tamaño de pantalla
+            if (window.innerWidth < 480) totalHearts = 8;
+            else if (window.innerWidth < 768) totalHearts = 9;
+            else totalHearts = 10;
+            
+            totalHeartsElement.textContent = totalHearts;
+            
+            for (let i = 0; i < totalHearts; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-plant');
+                heart.dataset.id = i;
+                heart.dataset.watered = 'false';
+                
+                // Icono de corazón
+                const heartIcon = document.createElement('i');
+                heartIcon.classList.add('fas', 'fa-heart');
+                heart.appendChild(heartIcon);
+                
+                // Posición aleatoria pero no demasiado cerca de los bordes
+                // Ajustar según tamaño de pantalla
+                const minX = window.innerWidth < 480 ? 5 : 10;
+                const maxX = window.innerWidth < 480 ? 85 : 80;
+                const minY = window.innerWidth < 480 ? 10 : 15;
+                const maxY = window.innerWidth < 480 ? 70 : 70;
+                
+                const x = Math.random() * (maxX - minX) + minX;
+                const y = Math.random() * (maxY - minY) + minY;
+                
+                heart.style.left = `${x}%`;
+                heart.style.top = `${y}%`;
+                
+                // Tamaño inicial
+                heart.style.transform = 'scale(0.9)';
+                
+                // Añadir eventos táctiles y de clic
+                heart.addEventListener('click', () => waterHeart(heart));
+                heart.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    waterHeart(heart);
+                });
+                
+                heartsGarden.appendChild(heart);
+                hearts.push(heart);
+            }
+        }
+        
+        // Regar un corazón
+        function waterHeart(heartElement) {
+            if (heartElement.dataset.watered === 'true') return;
+            if (isWatering) return;
+            
+            // Activar modo riego
+            isWatering = true;
+            waterCan.classList.add('active');
+            
+            // Reproducir sonido de agua
+            waterSound.currentTime = 0;
+            waterSound.volume = 0.5;
+            waterSound.play().catch(e => console.log("No se pudo reproducir sonido de agua"));
+            
+            // Crear gotas de agua
+            createWaterDrops(heartElement);
+            
+            // Después de un breve retraso, marcar como regado
+            setTimeout(() => {
+                heartElement.dataset.watered = 'true';
+                heartElement.classList.add('watered');
+                
+                // Reproducir sonido de crecimiento
+                growthSound.currentTime = 0;
+                growthSound.volume = 0.6;
+                growthSound.play().catch(e => console.log("No se pudo reproducir sonido de crecimiento"));
+                
+                // Actualizar contador
+                wateredHearts++;
+                wateredCountElement.textContent = wateredHearts;
+                
+                // Actualizar barra de progreso
+                const progressPercent = (wateredHearts / totalHearts) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Desactivar modo riego
+                setTimeout(() => {
+                    isWatering = false;
+                    waterCan.classList.remove('active');
+                }, 300);
+                
+                // Verificar si todos los corazones están regados
+                if (wateredHearts === totalHearts) {
+                    // Reproducir sonido de éxito
+                    successSound.currentTime = 0;
+                    successSound.volume = 0.7;
+                    successSound.play().catch(e => console.log("No se pudo reproducir sonido de éxito"));
+                    
+                    // Mostrar mensaje después de un breve retraso
+                    setTimeout(() => {
+                        messageContainer.classList.add('show');
+                        createConfetti();
+                        
+                        // Desplazar suavemente al mensaje en móviles
+                        if (window.innerWidth < 768) {
+                            setTimeout(() => {
+                                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 300);
+                        }
+                    }, 1000);
+                }
+            }, 600);
+        }
+        
+        // Crear gotas de agua
+        function createWaterDrops(targetElement) {
+            const rect = targetElement.getBoundingClientRect();
+            const waterCanRect = waterCan.getBoundingClientRect();
+            
+            // Crear varias gotas
+            const dropCount = window.innerWidth < 768 ? 3 : 5;
+            
+            for (let i = 0; i < dropCount; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('water-drop');
+                
+                // Posición inicial cerca de la regadera
+                const startX = waterCanRect.left + waterCanRect.width / 2;
+                const startY = waterCanRect.top + waterCanRect.height / 2;
+                
+                drop.style.left = `${startX + (Math.random() * 15 - 7.5)}px`;
+                drop.style.top = `${startY}px`;
+                
+                // Posición final cerca del corazón
+                const endX = rect.left + rect.width / 2;
+                const endY = rect.top + rect.height / 2;
+                
+                // Calcular distancia para la animación
+                const deltaX = endX - startX;
+                const deltaY = endY - startY;
+                
+                // Añadir al documento
+                document.body.appendChild(drop);
+                
+                // Animar la gota
+                drop.animate([
+                    { transform: `translate(0, 0) scale(1)`, opacity: 0.8 },
+                    { transform: `translate(${deltaX}px, ${deltaY}px) scale(0.5)`, opacity: 0 }
+                ], {
+                    duration: 800,
+                    easing: 'cubic-bezier(0.2, 0.8, 0.3, 1)'
+                });
+                
+                // Eliminar la gota después de la animación
+                setTimeout(() => {
+                    if (drop.parentNode) {
+                        drop.parentNode.removeChild(drop);
+                    }
+                }, 800);
+            }
+        }
+        
+        // Crear efecto de confeti
+        function createConfetti() {
+            const colors = ['#ff7eb3', '#ff758c', '#4dabf7', '#a3d9ff', '#ffde7d'];
+            const confettiCount = window.innerWidth < 768 ? 100 : 150;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Color aleatorio
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Posición inicial aleatoria en la parte superior
+                confetti.style.left = `${Math.random() * 100}vw`;
+                
+                // Tamaño aleatorio
+                const width = Math.random() * 8 + 4;
+                const height = Math.random() * 12 + 8;
+                confetti.style.width = `${width}px`;
+                confetti.style.height = `${height}px`;
+                
+                // Forma aleatoria
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                }
+                
+                // Rotación inicial
+                const rotation = Math.random() * 360;
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                
+                // Añadir al documento
+                document.body.appendChild(confetti);
+                
+                // Animación de caída con parámetros aleatorios
+                const animationDuration = Math.random() * 2.5 + 1.5;
+                const animationDelay = Math.random() * 0.5;
+                
+                confetti.animate([
+                    { 
+                        transform: `translateY(0) rotate(${rotation}deg)`, 
+                        opacity: 1 
+                    },
+                    { 
+                        transform: `translateY(100vh) rotate(${rotation + 360}deg)`, 
+                        opacity: 0 
+                    }
+                ], {
+                    duration: animationDuration * 1000,
+                    delay: animationDelay * 1000,
+                    easing: 'cubic-bezier(0.2, 0.8, 0.3, 1)'
+                });
+                
+                // Eliminar el confeti después de la animación
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, (animationDuration + animationDelay) * 1000);
+            }
+        }
+        
+        // Control de música
+        musicControl.addEventListener('click', function() {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicControl.innerHTML = '<i class="fas fa-music"></i>';
+                isMusicPlaying = false;
+            } else {
+                backgroundMusic.volume = 0.4;
+                backgroundMusic.play().then(() => {
+                    musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    console.log("Error al reproducir música: ", error);
+                    musicControl.innerHTML = '<i class="fas fa-music"></i>';
+                    alert("Para activar la música, toca primero cualquier parte de la pantalla y luego el botón de música.");
+                });
+            }
+        });
+        
+        // Habilitar música después de la interacción del usuario
+        document.addEventListener('click', function enableAudio() {
+            // Esto ayuda a superar las restricciones de autoplay
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().then(() => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                });
+            }
+            document.removeEventListener('click', enableAudio);
+        }, { once: true });
+        
+        // Cerrar mensaje
+        closeMessage.addEventListener('click', function() {
+            messageContainer.classList.remove('show');
+        });
+        
+        // Cerrar mensaje al tocar fuera de él en móviles
+        messageContainer.addEventListener('click', function(e) {
+            if (e.target === messageContainer) {
+                messageContainer.classList.remove('show');
+            }
+        });
+        
+        // Hacer la regadera arrastrable
+        let isDragging = false;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+        
+        waterCan.addEventListener('mousedown', startDrag);
+        waterCan.addEventListener('touchstart', startDrag, { passive: false });
+        
+        function startDrag(e) {
+            isDragging = true;
+            
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            
+            const rect = waterCan.getBoundingClientRect();
+            dragOffsetX = clientX - rect.left;
+            dragOffsetY = clientY - rect.top;
+            
+            waterCan.style.transition = 'none';
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchend', stopDrag);
+            
+            if (e.type === 'touchstart') e.preventDefault();
+        }
+        
+        function drag(e) {
+            if (!isDragging) return;
+            
+            const clientX = e.clientX || e.touches[0].clientX;
+            const clientY = e.clientY || e.touches[0].clientY;
+            
+            const gardenRect = document.querySelector('.garden-container').getBoundingClientRect();
+            
+            // Calcular nueva posición manteniéndose dentro del jardín
+            let newLeft = clientX - gardenRect.left - dragOffsetX;
+            let newTop = clientY - gardenRect.top - dragOffsetY;
+            
+            // Limitar al área del jardín
+            newLeft = Math.max(0, Math.min(newLeft, gardenRect.width - waterCan.offsetWidth));
+            newTop = Math.max(0, Math.min(newTop, gardenRect.height - waterCan.offsetHeight));
+            
+            waterCan.style.left = `${newLeft}px`;
+            waterCan.style.top = `${newTop}px`;
+            
+            if (e.type === 'touchmove') e.preventDefault();
+        }
+        
+        function stopDrag() {
+            isDragging = false;
+            waterCan.style.transition = 'transform 0.3s, background 0.3s';
+            
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+        
+        // Ajustar el juego al tamaño de la pantalla
+        function adjustGameForScreen() {
+            createStars();
+            createFloatingHearts();
+            createHeartPlants();
+            
+            // Restablecer progreso si es necesario
+            if (wateredHearts > 0) {
+                wateredHearts = 0;
+                wateredCountElement.textContent = '0';
+                progressBar.style.width = '0%';
+            }
+            
+            // Ajustar tamaño de la regadera para pantallas muy pequeñas
+            if (window.innerWidth < 350) {
+                waterCan.style.width = '40px';
+                waterCan.style.height = '40px';
+            }
+        }
+        
+        // Inicializar la experiencia
+        function initExperience() {
+            adjustGameForScreen();
+            
+            // Actualizar instrucciones después de un tiempo
+            setTimeout(() => {
+                const instructions = document.querySelectorAll('.instructions p');
+                if (instructions[0]) {
+                    instructions[0].textContent = 
+                        "¡Perfecto! Sigue regando los corazones para ver qué sucede...";
+                }
+            }, 5000);
+            
+            // Configurar volumen de sonidos
+            waterSound.volume = 0.5;
+            growthSound.volume = 0.6;
+            successSound.volume = 0.7;
+            backgroundMusic.volume = 0.4;
+        }
+        
+        // Escuchar cambios de tamaño de ventana
+        window.addEventListener('resize', adjustGameForScreen);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(adjustGameForScreen, 100);
+        });
+        
+        // Inicializar cuando se cargue la página
+        window.addEventListener('DOMContentLoaded', initExperience);
+        
+        // Prevenir el comportamiento de desplazamiento por defecto en algunos gestos táctiles
+        document.addEventListener('touchmove', function(e) {
+            if (isDragging) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Manejar gesto de deslizar para cerrar la carta en móviles
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        messageContainer.addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+        
+        messageContainer.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeDistance = touchEndY - touchStartY;
+            
+            // Si se desliza hacia abajo más de 50px en móviles y la carta está abierta
+            if (swipeDistance > 50 && window.innerWidth < 768) {
+                messageContainer.classList.remove('show');
+            }
+        }
+        
+        // Función para reiniciar el juego
+        function resetGame() {
+            wateredHearts = 0;
+            wateredCountElement.textContent = '0';
+            progressBar.style.width = '0%';
+            
+            hearts.forEach(heart => {
+                heart.dataset.watered = 'false';
+                heart.classList.remove('watered');
+            });
+            
+            messageContainer.classList.remove('show');
+        }
+        
+        // Agregar botón de reinicio para pruebas
+        const restartBtn = document.createElement('button');
+        restartBtn.textContent = 'Reiniciar juego';
+        restartBtn.style.cssText = `
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 126, 179, 0.8);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 50;
+            display: none;
+        `;
+        restartBtn.addEventListener('click', resetGame);
+        document.body.appendChild(restartBtn);
+        
+        // Mostrar botón de reinicio solo en desarrollo
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            restartBtn.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
