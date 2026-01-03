@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Jardín de Nuestro Amor</title>
+    <title>The Garden</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* RESET Y CONFIGURACIÓN BASE PARA RESPONSIVE */
@@ -549,8 +549,8 @@
     
     <div class="container">
         <div class="header fade-in">
-            <h1>Jardín de Nuestro Amor</h1>
-            <p class="subtitle">Riega los corazones para hacer crecer nuestro jardín especial</p>
+            <h1>El Jardín Especial</h1>
+            <p class="subtitle">Riega los corazones para hacer crecer el jardín</p>
         </div>
         
         <div class="progress-text">Corazones regados: <span id="wateredCount">0</span> / <span id="totalHearts">10</span></div>
@@ -559,7 +559,7 @@
         </div>
         
         <div class="instructions">
-            <p>Toma la regadera y toca cada corazón para regarlo. Cuando todos hayan crecido, descubrirás un mensaje especial.</p>
+            <p>Toca cada corazón para regarlo. Cuando todos hayan crecido, descubrirás un mensaje especial.</p>
         </div>
         
         <div class="garden-container">
@@ -581,18 +581,15 @@
                 <i class="fas fa-times"></i>
             </button>
             <div class="message-content">
-                <h2 class="message-title">Para Ti, Mi Amor</h2>
+                <h2 class="message-title">Nathalia Valentina</h2>
                 <div class="message-text">
-                    <p>Querida <span id="girlfriendName">Amor Mío</span>,</p>
-                    <p>Así como has regado cada corazón en este jardín, así has regado el mío con tu amor, paciencia y cariño. Cada día a tu lado es una nueva flor que florece en el jardín de mi vida.</p>
-                    <p>Recuerdo la primera vez que te vi, como una semilla de algo hermoso que aún no podía imaginar. Con el tiempo, has crecido en mi corazón hasta convertirte en el árbol más fuerte y hermoso, cuyas raíces se han entrelazado con las mías de forma inseparable.</p>
-                    <p>Me encanta cómo riegas mi vida con risas, cómo abonas mis días con complicidad, y cómo podas mis preocupaciones con tu apoyo incondicional. Eres el jardinero perfecto para el jardín de mi alma.</p>
-                    <p>Hoy quiero prometerte que seguiré regando nuestro amor cada día, que cuidaré de esta conexión especial que hemos cultivado juntos, y que siempre buscaré la luz del sol incluso en los días nublados, porque contigo todo es más brillante.</p>
-                    <p>Este jardín virtual es solo un pequeño reflejo de todo lo que quiero construir contigo. Un espacio donde nuestro amor pueda crecer, florecer y dar frutos eternos.</p>
-                    <p>Te amo más de lo que estas simples palabras pueden expresar.</p>
+                    <p> <span id="girlfriendName"></span></p>
+                    <p>In english they say: "I love you."</p>
+                    <p>But in science we say:</p>
+                    <p>"If someday the moon calls you by your name, don't be surprised, because every night I tell her about you."</p>
                 </div>
                 <div class="message-signature">
-                    <p>Con todo mi corazón,<br><span id="yourName">Tu pareja</span></p>
+                    <p><br><span id="yourName"></span></p>
                 </div>
             </div>
         </div>
@@ -634,8 +631,8 @@
         const yourNameElement = document.getElementById('yourName');
         
         // Personalizar nombres
-        girlfriendNameElement.textContent = "Amor Mío";
-        yourNameElement.textContent = "Tu Pareja";
+        girlfriendNameElement.textContent = "";
+        yourNameElement.textContent = "";
         
         // Variables del juego
         let totalHearts = 10;
